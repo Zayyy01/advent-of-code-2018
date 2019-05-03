@@ -32,7 +32,6 @@ namespace Day9
             int players = int.Parse(args[0]);
             int marbles = int.Parse(args[1]);
             int actPlayer;
-            circle.Capacity = marbles;
 
             circle.Add(0);
 
@@ -44,9 +43,6 @@ namespace Day9
                 {
                     Next();
                     Next();
-
-                    if(ptr == circle.Count)
-                        circle.Add(i);
 
                     circle.Insert(ptr, i);
                 }
