@@ -8,23 +8,25 @@ namespace Day9
 {
     class Program
     {
-        static List<int> circle = new List<int>();
-        static Dictionary<int, int> scores = new Dictionary<int, int>();
-        static int ptr = 0;
+        static LinkedList<int> circle = new LinkedList<int>();
+        static Dictionary<int, double> scores = new Dictionary<int, double>();
+        static LinkedListNode<int> ptr;
 
 
         static void Next()
         {
-            ptr++;
-            if (ptr >= circle.Count)
-                ptr = 0;
+            if (ptr == circle.Last)
+                ptr = circle.First;
+            else
+                ptr = ptr.Next;
         }
 
         static void Previous()
         {
-            ptr--;
-            if (ptr < 0)
-                ptr = circle.Count - 1;
+            if (ptr == circle.First)
+                ptr = circle.Last;
+            else
+                ptr = ptr.Previous;
         }
 
         static void Main(string[] args)
@@ -33,34 +35,41 @@ namespace Day9
             int marbles = int.Parse(args[1]);
             int actPlayer;
 
-            circle.Add(0);
+            circle.AddFirst(0);
+            ptr = circle.First;
 
             for (int i = 1; i <= marbles; i++)
             {
                 actPlayer = (i - 1) % players;
 
-                if(i % 23 != 0)
+                if (i % 23 != 0)
                 {
                     Next();
                     Next();
 
-                    circle.Insert(ptr, i);
+
+                    circle.AddBefore(ptr, i);
+                    Previous();
                 }
                 else
                 {
-                    if(!scores.ContainsKey(actPlayer))
+                    if (!scores.ContainsKey(actPlayer))
                         scores.Add(actPlayer, i);
                     else
                         scores[actPlayer] += i;
 
                     for (int j = 0; j < 7; j++) Previous();
 
-                    scores[actPlayer] += circle.ElementAt(ptr);
+                    scores[actPlayer] += ptr.Value;
 
-                    circle.RemoveAt(ptr);
+                    var removable = ptr;
+                    if (ptr == circle.Last)
+                        ptr = circle.First;
+                    else
+                        ptr = ptr.Next;
 
-                    if(ptr >= circle.Count)
-                        ptr = 0;
+                    circle.Remove(removable);
+
                 }
             }
 
