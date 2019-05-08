@@ -51,20 +51,6 @@ namespace Day11
                             coord = (x, y, size);
                         }
                     }
-
-                    //for (int i = y; i < y + 3; i++)
-                    //{
-                    //    for (int j = x; j < x + 3; j++)
-                    //    {
-                    //        val += grid[i - 1][j - 1];
-                    //    }
-                    //}
-
-                    //if (val > maxVal)
-                    //{
-                    //    maxVal = val;
-                    //    coord = (x, y);
-                    //}
                 }
             }
             Console.WriteLine(coord);
